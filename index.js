@@ -1,14 +1,16 @@
-const http = require('http');
 const express = require('express');
 const parser = require('body-parser');
+const consign = require('consign');
 
-const hostname = '127.0.0.1';
-const port = 8080;
-
+// Express
 const app = express();
 app.use(parser.json());
+//
 
-http.createServer(app)
-    .listen(port, hostname, () => {
-        console.log(`Server running at http://${hostname}:${port}`);
-    });
+// Consign
+consign()
+    .include('config')
+    .then('routes')
+    .then('controllers')
+    .into(app);
+//

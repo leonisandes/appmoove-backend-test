@@ -7,3 +7,6 @@ node_modules
 *.iws
 *.iml
 *.ipr
+
+.env
+.env.dev
