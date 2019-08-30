@@ -10,7 +10,6 @@ app.use(parser.json());
 // Consign
 consign()
     .include('config')
-    .then('routes')
-    .then('controllers')
+    .then('produto')
     .into(app);
 //
