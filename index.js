@@ -12,6 +12,9 @@ app.use(promiseRouter);
 // Consign
 consign()
     .include('config')
-    .then('produto')
+    .then('repositories')
+    .then('services')
+    .then('controllers')
+    .then('routes')
     .into(app);
 //
