@@ -7,7 +7,7 @@ module.exports = app => ({
         app.config.validation.hasErrors(req)
             .then(async () => {
                 try {
-                    const produtoCriado = await app.produto.produtoService.adicionar(req.body);
+                    const produtoCriado = await app.services.produtoService.adicionar(req.body);
                     res.send(produtoCriado);
                 } catch (err) {
                     trataMensagemDeErro(res, err);
@@ -19,7 +19,7 @@ module.exports = app => ({
     },
     listar: async (req, res) => {
         try {
-            const produtos = await app.produto.produtoService.listar();
+            const produtos = await app.services.produtoService.listar();
             res.status(200).send(produtos);
         } catch (err) {
             trataMensagemDeErro(res, err);

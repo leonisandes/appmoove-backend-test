@@ -8,14 +8,14 @@ function lancaOErroELoga(e) {
 module.exports = app => ({
     adicionar: async produto => {
         try {
-            return await app.produto.produtoRepository.adicionar(produto);
+            return await app.repositories.produtoRepository.adicionar(produto);
         } catch (e) {
             throw lancaOErroELoga(e);
         }
     },
     listar: async () => {
         try {
-            return await app.produto.produtoRepository.listar()
+            return await app.repositories.produtoRepository.listar()
                 .then(produtos => produtos.map(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque)));
         } catch (e) {
             throw lancaOErroELoga(e);

@@ -1,6 +1,6 @@
 module.exports = (app) => {
     const CONTEXT = '/api/produtos';
-    const controller = app.produto.produtoController;
+    const controller = app.controllers.produtoController;
 
     app.post(CONTEXT, app.config.validation.adicionarProdutosValidation(), async (req, res) => {
         controller.adicionar(req, res);
