@@ -5,4 +5,7 @@ module.exports = (app) => {
     app.post(CONTEXT, app.config.validation.adicionarProdutosValidation(), async (req, res) => {
         controller.adicionar(req, res);
     });
+    app.get(CONTEXT, async (req, res) => {
+        controller.listar(req, res);
+    });
 };

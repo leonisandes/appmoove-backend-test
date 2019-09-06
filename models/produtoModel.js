@@ -3,7 +3,7 @@ const knex = require('../config/knex');
 
 Model.knex(knex);
 
-class Produto extends Model {
+class ProdutoModel extends Model {
 
     static get tableName() {
         return 'produtos';
@@ -36,4 +36,4 @@ class Produto extends Model {
 
 }
 
-module.exports = () => ({ instance: Produto });
+module.exports = ProdutoModel;

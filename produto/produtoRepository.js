@@ -1,13 +1,21 @@
 const { transaction } = require('objection');
+const ProdutoModel = require('../models/produtoModel');
 
-module.exports = (app) => ({
+module.exports = () => ({
     adicionar: async produto => {
         try {
-            const model = app.produto.produtoModel.instance;
-            const produtoInserido = await transaction(model.knex(), trx => (
-                model.query(trx).insertGraph(produto)
+            return await transaction(ProdutoModel.knex(), trx => (
+                ProdutoModel.query(trx).insertGraph(produto)
             ));
-            return produtoInserido;
+        } catch (e) {
+            throw e;
+        }
+    },
+    listar: async () => {
+        try {
+            return await transaction(ProdutoModel.knex(), trx => (
+                ProdutoModel.query(trx).orderBy('id')
+            ));
         } catch (e) {
             throw e;
         }
