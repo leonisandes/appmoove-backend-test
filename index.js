@@ -2,6 +2,7 @@ const express = require('express');
 const parser = require('body-parser');
 const consign = require('consign');
 const promiseRouter = require('express-promise-router')();
+const ValidationError = require('./errors/validationError');
 
 // Express
 const app = express();
@@ -22,6 +23,10 @@ consign()
 
 // Error handling
 app.use((error, req, res, next) => {
-    app.config.validation.trataErroGenerico(res, error);
+    if (error instanceof ValidationError) {
+        app.commons.validation.trataErroDeValidacao(res, error);
+    } else {
+        app.commons.validation.trataErroGenerico(res, error);
+    }
 });
 //
