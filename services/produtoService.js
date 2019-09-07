@@ -1,7 +1,7 @@
 const ProdutoDTO = require('../dtos/produtoDTO');
 
 function lancaOErroELoga(e) {
-    console.error(`Ocorreu um erro ao adicionar protudo: ${e}`);
+    console.error(`Ocorreu um erro ao adicionar produto: ${e}`);
     throw Error('Algum problema inesperado aconteceu, não se preocupe estamos atuando...');
 }
 
