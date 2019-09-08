@@ -11,4 +11,8 @@ module.exports = app => ({
         const produtos = await app.services.produtoService.listar();
         res.status(200).send(produtos);
     },
+    detalhe: async (req, res) => {
+        const detalheProduto = await app.services.produtoService.detalhe(req.params.produto_id);
+        res.status(200).send(detalheProduto);
+    },
 });

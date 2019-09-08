@@ -10,4 +10,7 @@ module.exports = (app) => {
     app.get(CONTEXT, wrap(async (req, res) => {
         await controller.listar(req, res);
     }));
+    app.get(`${CONTEXT}/:produto_id`, wrap(async (req, res) => {
+        await controller.detalhe(req, res);
+    }));
 };

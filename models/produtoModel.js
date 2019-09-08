@@ -1,5 +1,6 @@
 const { Model } = require('objection');
 const knex = require('../config/knex');
+const TransacaoModel = require('./transacaoModel');
 
 Model.knex(knex);
 
@@ -16,6 +17,19 @@ class ProdutoModel extends Model {
 
     $beforeUpdate() {
         this.data_atualizacao = new Date();
+    }
+
+    static get relationMappings() {
+        return {
+            transacoes: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: TransacaoModel,
+                join: {
+                    from: 'produtos.id',
+                    to: 'transacoes.produto_id',
+                },
+            },
+        };
     }
 
     static get jsonSchema() {
