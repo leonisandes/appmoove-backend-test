@@ -1,9 +1,9 @@
 class ProdutoDTO {
 
-    constructor(nome, valor_unitario, qtde_estoque) {
+    constructor(nome, valorUnitario, qtdeEstoque) {
         this.nome = nome;
-        this.valor_unitario = valor_unitario;
-        this.qtde_estoque = qtde_estoque;
+        this.valor_unitario = valorUnitario;
+        this.qtde_estoque = qtdeEstoque;
     }
 
 }
