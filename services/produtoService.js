@@ -22,4 +22,6 @@ module.exports = app => ({
     }),
     buscar: app.commons.wrap.handlerExceptionService(async id =>
         app.repositories.produtoRepository.buscar(id).then(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque))),
+    validarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
+        app.repositories.produtoRepository.buscar(id).then(p => { if (p.qtde_estoque < quantidade) throw SemEstoqueError(); })),
 });
