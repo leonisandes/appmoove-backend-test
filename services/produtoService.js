@@ -8,16 +8,17 @@ module.exports = app => ({
         .then(produtos => produtos.map(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque)))),
     detalhe: app.commons.wrap.handlerExceptionService(async id => app.repositories.produtoRepository.detalhe(id)
         .then(detalhe => new DetalheProdutoDTO(detalhe.nome, detalhe.valor_unitario, detalhe.qtde_estoque, detalhe.valorUltimaVenda))),
-    baixarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) => {
-        this.validarEstoque(id, quantidade)
+    baixarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
+        app.services.produtoService.validarEstoque(id, quantidade)
             .then(produto => {
                 const produtoClone = produto;
                 produtoClone.qtde_estoque -= quantidade;
                 app.repositories.produtoRepository.atualizar(produtoClone);
-            });
-    }),
+            })),
     buscar: app.commons.wrap.handlerExceptionService(async id =>
         app.repositories.produtoRepository.buscar(id).then(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque))),
     validarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
-        app.repositories.produtoRepository.buscar(id).then(p => { if (p.qtde_estoque < quantidade) throw new SemEstoqueError(); else return p; })),
+        app.repositories.produtoRepository.buscar(id).then(p => {
+            if (p.qtde_estoque < quantidade) throw new SemEstoqueError(); else return p;
+        })),
 });
