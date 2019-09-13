@@ -16,6 +16,7 @@ consign()
     .then('commons')
     .then('repositories')
     .then('services')
+    .then('clients')
     .then('controllers')
     .then('routes')
     .into(app);
