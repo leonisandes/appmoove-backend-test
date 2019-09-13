@@ -1,8 +1,9 @@
-const { check, validationResult } = require('express-validator');
+const { check, validationResult, body } = require('express-validator');
 const MensagemDTO = require('../dtos/mensagemDTO');
 const ValidationError = require('../errors/validationError');
+const Promise = require('bluebird');
 
-module.exports = () => ({
+module.exports = (app) => ({
     hasErrors: req => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -21,12 +22,12 @@ module.exports = () => ({
         res.status(err.statusCode).json(err);
     },
     validacaoComprarProduto: () => [
-        // TODO: Validar se produto e valido
+        body('produto_id').custom(produtoId => app.services.produtoService.buscar(produtoId).catch(() => Promise.reject('Produto não existe.'))),
         check('produto_id', 'Necessário informar o id do produto').isInt(1),
-        // TODO: Validar se tem produto no estoque
+        body('qtde_comprada').custom((qtdeComprada, { req }) => app.services.produtoService.validarEstoque(req.body.produto_id, qtdeComprada).catch(() => Promise.reject('Estoque insuficiente.'))),
         check('qtde_comprada', 'Necessário informar a quantidade comprada do produto').isInt(1),
         check('cartao.titular', 'Necessário informar o nome do titular do cartão.').not().isEmpty(),
-        check('cartao.numero', 'Necessário informar o numero do cartão.').isCreditCard(),
+        check('cartao.numero', 'Necessário informar um numero de cartão valido.').isCreditCard(),
         check('cartao.data_expiracao', 'Necessário informar a data de expiração do cartão.').not().isEmpty(),
         check('cartao.bandeira', 'Necessário informar a bandeira do cartão.').not().isEmpty(),
         check('cartao.cvv', 'Necessário informar o CVV do cartão.').isInt().isLength(3),
