@@ -1,6 +1,6 @@
 const CustomError = require('./customError');
 
-class CompraError extends CustomError {
+class SemEstoqueError extends CustomError {
 
     constructor() {
         super('Sem estoque para o produto.', 400);
@@ -8,4 +8,4 @@ class CompraError extends CustomError {
 
 }
 
-module.exports = CompraError;
+module.exports = SemEstoqueError;
