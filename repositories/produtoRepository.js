@@ -22,4 +22,13 @@ module.exports = () => ({
             ])
             .first()
     )),
+    buscar: async id => transaction(ProdutoModel.knex(), trx => (
+        ProdutoModel
+            .query(trx)
+            .where('id', id)
+            .first()
+    )),
+    atualizar: async produto => transaction(ProdutoModel.knex(), trx => (
+        ProdutoModel.query(trx).findById(produto.id).patch(produto)
+    )),
 });

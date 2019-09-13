@@ -1,15 +1,24 @@
 const ProdutoDTO = require('../dtos/produtoDTO');
 const DetalheProdutoDTO = require('../dtos/detalheProdutoDTO');
-
-const wrap = fn => (...args) => fn(...args).catch(e => {
-    console.error(`Ocorreu um erro desconhecido: ${e}`);
-    throw Error('Ocorreu um erro desconhecido.');
-});
+const SemEstoqueError = require('../errors/semEstoqueError');
 
 module.exports = app => ({
-    adicionar: wrap(async produto => app.repositories.produtoRepository.adicionar(produto)),
-    listar: wrap(async () => app.repositories.produtoRepository.listar()
+    adicionar: app.commons.wrap.handlerExceptionService(async produto => app.repositories.produtoRepository.adicionar(produto)),
+    listar: app.commons.wrap.handlerExceptionService(async () => app.repositories.produtoRepository.listar()
         .then(produtos => produtos.map(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque)))),
-    detalhe: wrap(async id => app.repositories.produtoRepository.detalhe(id)
+    detalhe: app.commons.wrap.handlerExceptionService(async id => app.repositories.produtoRepository.detalhe(id)
         .then(detalhe => new DetalheProdutoDTO(detalhe.nome, detalhe.valor_unitario, detalhe.qtde_estoque, detalhe.valorUltimaVenda))),
+    baixarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
+        app.services.produtoService.validarEstoque(id, quantidade)
+            .then(produto => {
+                const produtoClone = produto;
+                produtoClone.qtde_estoque -= quantidade;
+                app.repositories.produtoRepository.atualizar(produtoClone);
+            })),
+    buscar: app.commons.wrap.handlerExceptionService(async id =>
+        app.repositories.produtoRepository.buscar(id).then(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque))),
+    validarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
+        app.repositories.produtoRepository.buscar(id).then(p => {
+            if (p.qtde_estoque < quantidade) throw new SemEstoqueError(); else return p;
+        })),
 });
