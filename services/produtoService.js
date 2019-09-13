@@ -1,6 +1,7 @@
 const ProdutoDTO = require('../dtos/produtoDTO');
 const DetalheProdutoDTO = require('../dtos/detalheProdutoDTO');
 const SemEstoqueError = require('../errors/semEstoqueError');
+const ProdutoNaoEncontradoError = require('../errors/produtoNaoEncotradoError');
 
 module.exports = app => ({
     adicionar: app.commons.wrap.handlerExceptionService(async produto => app.repositories.produtoRepository.adicionar(produto)),
@@ -16,9 +17,22 @@ module.exports = app => ({
                 app.repositories.produtoRepository.atualizar(produtoClone);
             })),
     buscar: app.commons.wrap.handlerExceptionService(async id =>
-        app.repositories.produtoRepository.buscar(id).then(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque))),
+        app.repositories.produtoRepository.buscar(id)
+            .then(p => {
+                if (!p) throw new ProdutoNaoEncontradoError();
+                return new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque);
+            })),
     validarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) =>
         app.repositories.produtoRepository.buscar(id).then(p => {
             if (p.qtde_estoque < quantidade) throw new SemEstoqueError(); else return p;
+        })),
+    remover: app.commons.wrap.handlerExceptionService(async id =>
+        app.services.produtoService.buscar(id).then(async p => {
+            const produtoClone = p;
+            produtoClone.id = parseInt(id);
+            produtoClone.data_exclusao = new Date();
+            app.repositories.produtoRepository.atualizar(produtoClone);
+        }).catch(err => {
+            console.warn(`Erro ao tentar localizar produto para remoção: ${err}`);
         })),
 });

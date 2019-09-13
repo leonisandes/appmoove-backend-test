@@ -6,12 +6,15 @@ module.exports = () => ({
         ProdutoModel.query(trx).insertGraph(produto)
     )),
     listar: async () => transaction(ProdutoModel.knex(), trx => (
-        ProdutoModel.query(trx).orderBy('id')
+        ProdutoModel.query(trx)
+            .whereNull('data_exclusao')
+            .orderBy('id')
     )),
     detalhe: async id => transaction(ProdutoModel.knex(), trx => (
         ProdutoModel
             .query(trx)
             .where('id', id)
+            .whereNull('data_exclusao')
             .select([
                 'produtos.*',
                 ProdutoModel.relatedQuery('transacoes')
@@ -26,6 +29,7 @@ module.exports = () => ({
         ProdutoModel
             .query(trx)
             .where('id', id)
+            .whereNull('data_exclusao')
             .first()
     )),
     atualizar: async produto => transaction(ProdutoModel.knex(), trx => (

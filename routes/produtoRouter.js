@@ -11,4 +11,7 @@ module.exports = (app) => {
     app.get(`${CONTEXT}/:produto_id`, app.commons.wrap.handlerExceptionController(async (req, res) => {
         await controller.detalhe(req, res);
     }));
+    app.delete(`${CONTEXT}/:produto_id`, app.commons.wrap.handlerExceptionController(async (req, res) => {
+        await controller.remover(req, res);
+    }));
 };
