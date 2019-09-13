@@ -9,7 +9,7 @@ module.exports = app => ({
     detalhe: app.commons.wrap.handlerExceptionService(async id => app.repositories.produtoRepository.detalhe(id)
         .then(detalhe => new DetalheProdutoDTO(detalhe.nome, detalhe.valor_unitario, detalhe.qtde_estoque, detalhe.valorUltimaVenda))),
     baixarEstoque: app.commons.wrap.handlerExceptionService(async (id, quantidade) => {
-        app.repositories.produtoRepository.buscar(id).then(produto => {
+        this.buscar(id).then(produto => {
             const produtoClone = produto;
             if (produtoClone.qtde_estoque >= quantidade) {
                 produtoClone.qtde_estoque -= quantidade;
@@ -20,4 +20,6 @@ module.exports = app => ({
             }
         });
     }),
+    buscar: app.commons.wrap.handlerExceptionService(async id =>
+        app.repositories.produtoRepository.buscar(id).then(p => new ProdutoDTO(p.nome, p.valor_unitario, p.qtde_estoque))),
 });
