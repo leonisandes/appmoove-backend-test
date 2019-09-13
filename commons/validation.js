@@ -20,4 +20,15 @@ module.exports = () => ({
     trataErroDeValidacao: (res, err) => {
         res.status(err.statusCode).json(err);
     },
+    validacaoComprarProduto: () => [
+        // TODO: Validar se produto e valido
+        check('produto_id', 'Necessário informar o id do produto').isInt(1),
+        // TODO: Validar se tem produto no estoque
+        check('qtde_comprada', 'Necessário informar a quantidade comprada do produto').isInt(1),
+        check('cartao.titular', 'Necessário informar o nome do titular do cartão.').not().isEmpty(),
+        check('cartao.numero', 'Necessário informar o numero do cartão.').isCreditCard(),
+        check('cartao.data_expiracao', 'Necessário informar a data de expiração do cartão.').not().isEmpty(),
+        check('cartao.bandeira', 'Necessário informar a bandeira do cartão.').not().isEmpty(),
+        check('cartao.cvv', 'Necessário informar o CVV do cartão.').isInt().isLength(3),
+    ],
 });
