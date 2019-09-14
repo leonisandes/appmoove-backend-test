@@ -1,5 +1,18 @@
 # Appmoove: Teste prático para back-end developer 
 
+## Documentação
+
+### Apis
+
+ - Postman: https://documenter.getpostman.com/view/4346317/SVmtxJv9?version=latest
+ - Aplicação: https://interview-appmoove-back-test.herokuapp.com/
+ 
+## Docker
+
+1. Execute na raiz do diretorio: docker-compose up --build
+2. O servidor será executado em: http://localhost:8080
+3. Você pode utilizar o postman (na pasta tools/postman) para realizar requições.
+
 ## Pré-requisitos
 
 - JavaScript

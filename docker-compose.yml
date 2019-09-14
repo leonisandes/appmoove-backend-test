@@ -13,3 +13,19 @@ services:
       - 3306:3306
     volumes:
       - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+
+  appmoove-backend:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      PORT: 8080
+      DB_CLIENT: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: backend_test
+      GATEWAY_URL: http://www.mocky.io/v2/5d7c3502350000472f913b0c

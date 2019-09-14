@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "4a5a079e-73cd-42b1-a31a-609231f46691",
+		"name": "AppMoove Backend Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Adicionar Produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82a4949e-2285-49b7-9bbf-8fd3261a5965",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Macbook 13 8GB|256SSD|2.7Ghz\",\n    \"valor_unitario\": 99999999.99,\n    \"qtde_estoque\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/produtos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/produtos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhe Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/produtos/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/produtos/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Compra",
+			"item": [
+				{
+					"name": "Comprar Produto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"produto_id\": 1,\n    \"qtde_comprada\": 1,\n    \"cartao\": {\n        \"titular\": \"John Doe\",\n        \"numero\": \"4111111111111111\",\n        \"data_expiracao\": \"12/2018\",\n        \"bandeira\": \"VISA\",\n        \"cvv\": \"123\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/compras",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
