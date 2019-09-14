@@ -3,8 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.15.0
-    working_directory: ~/repo
-
+    working_directory: ~/appmoove-backend-test
     steps:
       - checkout
       - restore_cache:
