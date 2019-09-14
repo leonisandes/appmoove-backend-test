@@ -92,14 +92,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/produtos/25",
+							"raw": "{{url}}/api/produtos/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"produtos",
-								"25"
+								"1"
 							]
 						}
 					},
