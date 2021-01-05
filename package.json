@@ -11,7 +11,7 @@
   "author": "Leonardo Baiser & Edvaldo Szymonek",
   "license": "MIT",
   "dependencies": {
-    "axios": "0.17.1",
+    "axios": "0.21.1",
     "bluebird": "3.4.7",
     "body-parser": "1.13.2",
     "consign": "^0.1.6",
