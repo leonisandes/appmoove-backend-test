@@ -16,7 +16,7 @@
     "body-parser": "1.13.2",
     "consign": "^0.1.6",
     "dotenv-safe": "^8.1.0",
-    "express": "4.13.1",
+    "express": "4.17.3",
     "express-promise-router": "^3.0.3",
     "express-validator": "^6.2.0",
     "knex": "0.15.2",
